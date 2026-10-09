@@ -35,7 +35,8 @@ export default function Login() {
             formBody.append('password', formData.password);
 
             // POST /auth/token requires x-www-form-urlencoded
-            const response = await fetch('http://127.0.0.1:8000/auth/token', {
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+            const response = await fetch(`${API_URL}/auth/token`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
