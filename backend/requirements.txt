@@ -1,5 +1,7 @@
-fastapi	
-uvicorn	
-pyjwt	
-passlib[sha256_crypt]	
-python-multipart	
+fastapi
+uvicorn
+pyjwt
+passlib[sha256_crypt]
+python-multipart
+sqlalchemy
+pydantic

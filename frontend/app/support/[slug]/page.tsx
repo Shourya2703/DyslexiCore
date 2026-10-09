@@ -5,10 +5,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
-import '../SupportStyles.css'; 
-import { supportResources, generateStaticParams, SupportResource } from '../data'; 
-
-export { generateStaticParams }; 
+import '../page.css'; 
+import { supportResources, SupportResource } from '../data'; 
 
 // Custom styles for the external link button
 const externalLinkButtonStyle: React.CSSProperties = {

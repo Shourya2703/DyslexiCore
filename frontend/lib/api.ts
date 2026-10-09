@@ -1,7 +1,7 @@
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
 export async function fetchWithAuth(endpoint: string, options: any = {}) {
-  const token = localStorage.getItem("token"); // Get the token saved during login
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   const headers = {
     "Content-Type": "application/json",
@@ -14,7 +14,7 @@ export async function fetchWithAuth(endpoint: string, options: any = {}) {
     headers,
   });
 
-  if (response.status === 401) {
+  if (response.status === 401 && typeof window !== "undefined") {
     // If token is expired, send user back to login
     window.location.href = "/login";
   }

@@ -60,14 +60,31 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 app = FastAPI(title="Dyslexia Support - Full Hackathon Backend")
 
-# Allow requests from your Next.js frontend
+# Allow requests from your Next.js frontend (local and production Vercel domains)
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+custom_origins = os.getenv("ALLOWED_ORIGINS", "")
+if custom_origins:
+    origins.extend([o.strip() for o in custom_origins.split(",") if o.strip()])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=origins,
+    allow_origin_regex=r"^https:\/\/.*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def read_root():
+    return {"status": "ok", "message": "DyslexiCore API is running"}
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
 
 # --- DEPENDENCIES ---
 def get_db():
