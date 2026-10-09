@@ -11,4 +11,4 @@ services:
       - key: ALLOWED_ORIGINS
         value: "https://frontend-five-fawn-rtv1cmz6k6.vercel.app"
       - key: PYTHON_VERSION
-        value: "3.11.0"
+        value: "3.11.9"
