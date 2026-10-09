@@ -1,105 +1,154 @@
-/* AuthStyles.css */
+/* AuthStyles.css - Cosmic Mission Authentication */
 
 :root {
-    --color-primary: #800080;        /* Deep Purple */
-    --color-primary-light: #C39BE5;  /* Soft Lavender */
-    --color-background: #F8F4FF;     /* Light Lavender/Off-White */
-    --color-text-dark: #1F0839;      /* Dark Plum */
-    --color-success: #4ade80;        /* Green for success */
-    --color-error: #ef4444;          /* Red for errors */
-    --color-shadow: rgba(128, 0, 128, 0.15); 
+    --color-primary: #7C3AED;
+    --color-primary-light: #A78BFA;
+    --color-background: #060713;
+    --color-text-dark: #FFFFFF;
+    --color-success: #34D399;
+    --color-error: #F43F5E;
+    --color-shadow: rgba(124, 58, 237, 0.35); 
 }
 
 /* --- Container and Form Styling --- */
-
 .auth-page-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 80vh;
-    background-color: var(--color-background);
+    padding: 20px;
 }
 
 .form-container {
     width: 100%;
-    max-width: 400px;
-    padding: 40px;
-    background-color: var(--color-background-card, #FFFFFF);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px var(--color-shadow);
+    max-width: 440px;
+    padding: 44px 36px;
+    background: rgba(18, 20, 44, 0.78) !important;
+    border: 1px solid rgba(168, 85, 247, 0.35) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(124, 58, 237, 0.25) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #38BDF8, #A855F7, #F472B6);
 }
 
 .form-container h1 {
-    color: var(--color-primary);
+    color: #FFFFFF !important;
+    font-family: 'Space Grotesk', sans-serif;
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
 }
 
 .form-container form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px;
+}
+
+.form-container label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #CBD5E1;
+    margin-bottom: 4px;
+    display: block;
 }
 
 .form-container input {
-    padding: 12px 15px;
-    border: 2px solid var(--color-primary-light);
-    border-radius: 8px;
+    width: 100%;
+    padding: 14px 18px !important;
+    border: 1px solid rgba(168, 85, 247, 0.3) !important;
+    border-radius: 12px !important;
     font-size: 1rem;
-    color: var(--color-text-dark);
-    transition: border-color 0.2s, box-shadow 0.2s;
+    color: #FFFFFF !important;
+    background: rgba(10, 11, 26, 0.85) !important;
+    transition: all 0.25s ease;
 }
 
 .form-container input:focus {
-    border-color: var(--color-primary);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(128, 0, 128, 0.2);
+    border-color: #A855F7 !important;
+    outline: none !important;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.45) !important;
+    background: rgba(16, 17, 36, 0.95) !important;
 }
 
 /* --- Button Styling --- */
 .form-container button[type="submit"] {
-    padding: 12px;
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
+    margin-top: 10px;
+    padding: 15px;
+    background: linear-gradient(135deg, #7C3AED 0%, #6366F1 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.1rem;
-    font-weight: bold;
+    font-weight: 800;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 0 25px rgba(124, 58, 237, 0.55) !important;
+    transition: all 0.25s ease;
 }
 
 .form-container button[type="submit"]:hover {
-    background-color: #A020F0; /* Brighter purple on hover */
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, #8B5CF6 0%, #4F46E5 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 0 35px rgba(147, 51, 234, 0.8) !important;
 }
 
 /* --- Message and Link Styling --- */
 .message-error {
-    color: var(--color-error);
-    background-color: rgba(239, 68, 68, 0.1);
-    padding: 10px;
-    border-radius: 6px;
+    color: #FDA4AF;
+    background-color: rgba(244, 63, 94, 0.15);
+    border: 1px solid rgba(244, 63, 94, 0.3);
+    padding: 12px;
+    border-radius: 10px;
     margin-top: 15px;
     text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .message-success {
-    color: var(--color-success);
-    background-color: rgba(74, 222, 128, 0.1);
-    padding: 10px;
-    border-radius: 6px;
+    color: #6EE7B7;
+    background-color: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    padding: 12px;
+    border-radius: 10px;
     margin-top: 15px;
     text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.form-container p {
+    color: #94A3B8;
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.95rem;
 }
 
 .form-container p a {
-    color: var(--color-primary);
-    font-weight: bold;
+    color: #C084FC !important;
+    font-weight: 700;
     text-decoration: none;
+    transition: color 0.2s;
 }
 
 .form-container p a:hover {
+    color: #38BDF8 !important;
     text-decoration: underline;
 }

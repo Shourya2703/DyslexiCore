@@ -1,3 +1,5 @@
+// frontend/app/screening/page.tsx - Star Tracker Visual Calibration Mission
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -11,25 +13,22 @@ export default function DyslexiCoreStarGame() {
     const [starPos, setStarPos] = useState({ top: 50, left: 50 });
     const [isSaving, setIsSaving] = useState(false);
 
-    // --- GAME ENGINE ---
     useEffect(() => {
         let timer: NodeJS.Timeout;
         let starInterval: NodeJS.Timeout;
 
         if (step === 1 && timeLeft > 0) {
-            // Main countdown timer
             timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
             
-            // Move the star every 1.5 seconds to keep it engaging but kid-friendly
             starInterval = setInterval(() => {
                 setStarPos({ 
                     top: Math.random() * 60 + 20, 
                     left: Math.random() * 70 + 15 
                 });
-            }, 1500);
+            }, 1400);
 
         } else if (timeLeft === 0 && step === 1) {
-            setStep(2); // Move to results when time is up
+            setStep(2);
         }
 
         return () => {
@@ -41,7 +40,6 @@ export default function DyslexiCoreStarGame() {
     const handleStarHit = (e: React.MouseEvent) => {
         e.stopPropagation();
         setScore(prev => prev + 1);
-        // Move immediately on click so the player feels the impact
         setStarPos({ 
             top: Math.random() * 60 + 20, 
             left: Math.random() * 70 + 15 
@@ -50,43 +48,65 @@ export default function DyslexiCoreStarGame() {
 
     const handleFinish = async () => {
         setIsSaving(true);
-        // This is where you connect to your FastAPI backend
-        try {
-            // Simulated API call to your backend/assessment/submit
-            console.log("Saving score to DyslexiCore Database:", score);
+        setTimeout(() => {
             router.push('/dashboard');
-        } catch (error) {
-            console.error("Save failed", error);
-            router.push('/dashboard');
-        }
+        }, 600);
     };
 
     return (
         <div style={{ 
-            minHeight: '100vh', 
-            background: 'radial-gradient(circle, #1e1b4b 0%, #020617 100%)', 
+            minHeight: '80vh', 
+            background: 'radial-gradient(circle at center, rgba(30, 27, 75, 0.45) 0%, rgba(6, 7, 19, 0.95) 100%)', 
+            borderRadius: '24px',
+            border: '1px solid rgba(168, 85, 247, 0.3)',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(124, 58, 237, 0.2)',
             color: 'white', 
             position: 'relative', 
             overflow: 'hidden', 
-            fontFamily: 'sans-serif' 
+            userSelect: 'none'
         }}>
             
             {/* HUD */}
             {step === 1 && (
-                <div style={hudStyle}>
-                    <div style={hudBox}>Time Remaining: {timeLeft}s</div>
-                    <div style={hudBox}>Stars Caught: {score}</div>
+                <div style={{
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px',
+                    right: '20px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '12px 24px',
+                    background: 'rgba(18, 20, 44, 0.75)',
+                    backdropFilter: 'blur(16px)',
+                    borderRadius: '9999px',
+                    border: '1px solid rgba(168, 85, 247, 0.25)',
+                    zIndex: 100
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800 }}>
+                        <span>⭐</span>
+                        <span>Star Tracker Visual Calibration</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '20px', fontFamily: 'Space Grotesk, sans-serif' }}>
+                        <span style={{ color: '#FBBF24', fontWeight: 800 }}>Stars: {score}</span>
+                        <span style={{ color: '#38BDF8', fontWeight: 800 }}>Time Left: {timeLeft}s</span>
+                    </div>
                 </div>
             )}
 
             {/* START SCREEN */}
             {step === 0 && (
                 <div style={modalStyle}>
-                    <h1 style={{ color: '#60a5fa', fontSize: '2.5rem', marginBottom: '10px' }}>Star Tracker</h1>
-                    <p style={{ fontSize: '1.1rem', opacity: 0.9 }}>
-                        Calibration Mission: Catch as many stars as you can to test your visual focus!
+                    <div style={{ fontSize: '3.5rem', marginBottom: '15px' }}>⭐</div>
+                    <h1 style={{ color: '#FFFFFF', fontSize: '2.4rem', fontWeight: 800, margin: '0 0 10px' }}>
+                        Star Tracker Mission
+                    </h1>
+                    <p style={{ color: '#94A3B8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 auto 25px', maxWidth: '380px' }}>
+                        Calibrate your visual focus and tracking agility by catching luminous stars as they teleport across the galaxy.
                     </p>
-                    <button onClick={() => setStep(1)} style={btnStyle}>Launch Mission</button>
+                    <button onClick={() => setStep(1)} className="btn-launch" style={{ padding: '16px 40px', fontSize: '1.1rem' }}>
+                        LAUNCH MISSION →
+                    </button>
                 </div>
             )}
 
@@ -98,11 +118,11 @@ export default function DyslexiCoreStarGame() {
                         position: 'absolute', 
                         top: `${starPos.top}%`, 
                         left: `${starPos.left}%`,
+                        transform: 'translate(-50%, -50%)',
                         fontSize: '5.5rem', 
                         cursor: 'pointer', 
-                        transition: 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                        filter: 'drop-shadow(0 0 20px gold)',
-                        userSelect: 'none',
+                        transition: 'all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                        filter: 'drop-shadow(0 0 25px rgba(251, 191, 36, 0.95))',
                         zIndex: 10
                     }}
                 >
@@ -113,15 +133,26 @@ export default function DyslexiCoreStarGame() {
             {/* RESULTS SCREEN */}
             {step === 2 && (
                 <div style={modalStyle}>
-                    <h2 style={{ color: '#22c55e', fontSize: '2rem' }}>Mission Complete!</h2>
-                    <div style={{ margin: '25px 0', padding: '20px', background: 'rgba(255,255,255,0.05)', borderRadius: '15px' }}>
-                        <p style={{ fontSize: '1.2rem' }}>You caught <b>{score}</b> stars!</p>
-                        <p style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '10px' }}>
-                            Your visual tracking data is ready for analysis.
+                    <div style={{ fontSize: '3.5rem', marginBottom: '15px' }}>🌟</div>
+                    <h2 style={{ color: '#34D399', fontSize: '2.4rem', fontWeight: 800, margin: '0 0 10px' }}>
+                        Mission Complete!
+                    </h2>
+                    <div style={{
+                        margin: '25px auto',
+                        padding: '24px',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        borderRadius: '20px',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        maxWidth: '320px'
+                    }}>
+                        <div style={{ fontSize: '3rem', fontWeight: 900, color: '#FBBF24', fontFamily: 'Space Grotesk, sans-serif' }}>{score}</div>
+                        <p style={{ color: '#CBD5E1', margin: '6px 0 0', fontWeight: 600 }}>Celestial Targets Captured</p>
+                        <p style={{ fontSize: '0.85rem', color: '#94A3B8', marginTop: '10px' }}>
+                            Visual tracking reflex latency calibrated.
                         </p>
                     </div>
-                    <button onClick={handleFinish} style={btnStyle}>
-                        {isSaving ? "Syncing..." : "Update DyslexiCore"}
+                    <button onClick={handleFinish} className="btn-launch" style={{ padding: '16px 36px' }}>
+                        {isSaving ? "Syncing Telemetry..." : "Return to Mission Control →"}
                     </button>
                 </div>
             )}
@@ -129,8 +160,19 @@ export default function DyslexiCoreStarGame() {
     );
 }
 
-// STYLES
-const hudStyle: React.CSSProperties = { position: 'absolute', top: '30px', width: '100%', display: 'flex', justifyContent: 'center', gap: '40px', zIndex: 100 };
-const hudBox: React.CSSProperties = { background: 'rgba(255,255,255,0.1)', padding: '12px 25px', borderRadius: '50px', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', fontWeight: 'bold', fontSize: '1.1rem' };
-const modalStyle: React.CSSProperties = { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', background: '#1e293b', padding: '50px', borderRadius: '35px', border: '4px solid #3b82f6', width: '90%', maxWidth: '450px', boxShadow: '0 25px 60px rgba(0,0,0,0.6)' };
-const btnStyle: React.CSSProperties = { marginTop: '15px', padding: '18px 45px', background: '#3b82f6', color: 'white', border: 'none', borderRadius: '50px', cursor: 'pointer', fontSize: '1.3rem', fontWeight: 'bold', boxShadow: '0 10px 25px rgba(59, 130, 246, 0.4)', transition: 'transform 0.2s' };
+const modalStyle: React.CSSProperties = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    textAlign: 'center',
+    background: 'rgba(18, 20, 44, 0.92)',
+    padding: '48px 36px',
+    borderRadius: '28px',
+    border: '1px solid rgba(168, 85, 247, 0.4)',
+    width: '90%',
+    maxWidth: '460px',
+    boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(124, 58, 237, 0.35)',
+    backdropFilter: 'blur(20px)',
+    zIndex: 30
+};

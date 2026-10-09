@@ -1,157 +1,193 @@
-/* PhonicsStyles.css (Revisiting the Theme) */
+/* PhonicsAdventure - Galactic Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&display=swap');
 
 :root {
-    /* Primary Purple Theme Variables */
-    --color-primary: #800080;        /* Deep Purple/Magenta */
-    --color-primary-light: #C39BE5;  /* Soft Lavender/Light Purple */
-    --color-secondary: #00D1FF;      /* Cyan/Blue (Accent) */
-    --color-background: #F8F4FF;     /* Very Light Lavender/Off-White */
-    --color-background-card: #FFFFFF;
-    --color-text-dark: #1F0839;      /* Dark Plum for main text */
-    --color-text-light: #FFFFFF;     /* White for contrast */
-    --color-correct: #38A169;        /* Green for correct */
-    --color-incorrect: #E53E3E;      /* Red for incorrect */
-    --color-disabled: #A0AEC0;       /* Light Gray for disabled elements */
-    --color-current-goal: #84cc16;   /* Olive Green (Retained for Goal status) */
+    --color-primary: #7C3AED;
+    --color-secondary: #38BDF8;
+    --color-current-goal: #A3E635;
+    --color-disabled: #475569;
+    --color-background: #060713;
+    --color-background-card: rgba(18, 20, 44, 0.78);
+    --color-text-dark: #FFFFFF;
+    --color-text-light: #FFFFFF;
+    --color-correct: #34D399;
+    --color-incorrect: #F43F5E;
 }
 
-/* --- Global & Typography --- */
-body {
-    background-color: var(--color-background);
-    color: var(--color-text-dark);
-    font-family: 'Arial', sans-serif;
-}
-
-h1, h2 {
-    color: var(--color-text-dark);
-}
-
-/* --- Lesson Page Styles (Retained for LessonPage.tsx) --- */
-.lesson-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: var(--color-background-card);
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(128, 0, 128, 0.15); 
-}
-/* ... (Rest of the Lesson Page Styles) ... */
-
-
-/* --- Module Page Styles (New for page.tsx) --- */
-
+/* --- Module Page Container --- */
 .modules-page-container {
-    padding: 30px 20px;
+    padding: 40px 20px 60px;
     max-width: 1200px;
     margin: 0 auto;
+    color: #FFFFFF;
 }
 
 .modules-header {
-    color: var(--color-primary);
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 12px 0;
+    background: linear-gradient(90deg, #A5B4FC, #C084FC, #38BDF8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .welcome-message {
     font-size: 1.1rem;
-    color: var(--color-text-dark);
+    color: #94A3B8;
     margin-bottom: 40px;
+    line-height: 1.6;
 }
 
+/* --- Module Grid --- */
 .module-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
 }
 
 .module-card-link {
     text-decoration: none;
     display: block;
     height: 100%;
-    /* Override Next.js Link behavior for disabled modules */
-    pointer-events: auto; 
 }
 
 .module-card {
-    background: var(--color-background-card);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border-left: 8px solid var(--color-primary-light);
-    transition: all 0.3s ease;
-    cursor: pointer;
+    background: rgba(18, 20, 44, 0.78) !important;
+    padding: 28px;
+    border-radius: 20px;
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    border-left: 5px solid var(--color-primary);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Specific Border Colors */
-.border-current-goal { border-left-color: var(--color-current-goal); }
-.border-unlocked { border-left-color: var(--color-secondary); }
-.border-locked { border-left-color: var(--color-disabled); }
+.module-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.15), transparent 70%);
+}
+
+.module-card:hover::after {
+    opacity: 1;
+}
 
 .module-card:hover {
+    border-color: rgba(168, 85, 247, 0.7);
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.4), 0 20px 45px rgba(0, 0, 0, 0.7);
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(128, 0, 128, 0.2); /* Lift and subtle purple glow on hover */
 }
 
 .module-card.locked {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: default;
+    filter: grayscale(0.3);
 }
 
+/* Border Color Variants */
+.border-current-goal { border-left-color: var(--color-current-goal) !important; }
+.border-unlocked { border-left-color: var(--color-secondary) !important; }
+.border-locked { border-left-color: var(--color-disabled) !important; }
+
+/* --- Module Card Typography --- */
 .module-title {
-    margin: 0 0 10px 0;
-    font-size: 1.4rem;
-    font-weight: bold;
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0 0 12px 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
 }
 
 .module-status {
-    margin: 0 0 15px 0;
-    font-size: 1rem;
-    font-weight: bold;
+    margin: 0 0 20px 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .status-current-goal { color: var(--color-current-goal); }
 .status-unlocked { color: var(--color-secondary); }
 .status-locked { color: var(--color-disabled); }
 
+/* --- Start Button --- */
 .start-button {
     width: 100%;
-    padding: 10px 20px;
-    font-size: 1.1rem;
-    font-weight: bold;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 800;
     border: none;
-    border-radius: 8px;
-    color: var(--color-text-light);
-    transition: background-color 0.2s, transform 0.2s;
-    margin-top: auto; /* Push button to the bottom */
+    border-radius: 9999px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: auto;
+    letter-spacing: 0.03em;
 }
 
-.button-current-goal { background-color: var(--color-current-goal); }
-.button-unlocked { background-color: var(--color-primary); }
+.button-current-goal {
+    background: linear-gradient(135deg, #65a30d, #a3e635);
+    box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);
+    color: #0a1a00;
+}
+
+.button-unlocked {
+    background: linear-gradient(135deg, #7C3AED, #38BDF8);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+}
 
 .start-button:hover:not(:disabled) {
-    opacity: 0.9;
-    transform: scale(1.02);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
+    opacity: 0.92;
 }
 
 .start-button:disabled {
-    background-color: var(--color-disabled);
+    background: rgba(71, 85, 105, 0.4);
+    color: #64748B;
     cursor: default;
-    color: var(--color-text-dark);
+    box-shadow: none;
 }
 
+/* --- Back Link --- */
 .back-link {
-    display: block;
-    margin-top: 40px;
-    text-align: center;
-    font-weight: bold;
-    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 48px;
+    font-weight: 700;
+    color: #A5B4FC;
     font-size: 1rem;
     transition: color 0.2s;
+    text-decoration: none;
 }
+
 .back-link:hover {
-    color: #A020F0;
+    color: #38BDF8;
+}
+
+/* --- Lesson Container (used in /learn/lesson/1) --- */
+.lesson-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 36px;
+    background: rgba(18, 20, 44, 0.78);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(124, 58, 237, 0.2);
+    backdrop-filter: blur(20px);
+    color: #FFFFFF;
 }

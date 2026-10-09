@@ -100,8 +100,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <header>
             <nav className="navbar">
-              <Link href="/">
-                <span className="logo">Dyslexia Support System</span>
+              <Link href="/" style={{ textDecoration: 'none' }}>
+                <span className="logo">
+                  <span style={{ fontSize: '1.4rem' }}>🚀</span>
+                  <span>DyslexiCore</span>
+                  <span style={{ 
+                    fontSize: '0.65rem', 
+                    padding: '3px 8px', 
+                    borderRadius: '9999px', 
+                    background: 'rgba(168, 85, 247, 0.2)', 
+                    border: '1px solid rgba(168, 85, 247, 0.4)',
+                    color: '#D8B4FE',
+                    fontFamily: 'JetBrains Mono, monospace',
+                    fontWeight: 700,
+                    letterSpacing: '0.05em'
+                  }}>V2.0</span>
+                </span>
               </Link>
               <AuthLinks />
             </nav>

@@ -1,23 +1,19 @@
-/* DashboardStyles.css */
+/* support/page.css - Galactic Mission Support Hub */
 
 :root {
-    /* Reusing Variables for Theme Consistency */
-    --color-primary: #800080;        /* Deep Purple (Main Accent) */
-    --color-secondary: #00D1FF;      /* Cyan/Blue (Secondary Accent) */
-    --color-background: #F8F4FF;     /* Light Lavender/Off-White */
-    --color-background-card: #FFFFFF;
-    --color-text-dark: #1F0839;      /* Dark Plum */
-    --color-shadow-purple: rgba(128, 0, 128, 0.25); 
+    --color-primary: #7C3AED;
+    --color-secondary: #38BDF8;
+    --color-background: #060713;
+    --color-background-card: rgba(18, 20, 44, 0.72);
+    --color-text-dark: #FFFFFF;
+    --color-shadow-purple: rgba(124, 58, 237, 0.35); 
 }
 
-/* --- Page Structure --- */
-
 .dashboard-container {
-    padding: 30px 20px;
+    padding: 10px 0 60px;
     max-width: 1200px;
     margin: 0 auto;
-    font-family: 'Arial', sans-serif;
-    color: var(--color-text-dark);
+    color: #FFFFFF;
 }
 
 .dashboard-header {
@@ -26,28 +22,32 @@
 }
 
 .welcome-title {
-    color: var(--color-primary);
-    font-size: 3rem;
-    margin: 0 0 10px 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 12px 0;
+    background: linear-gradient(90deg, #A5B4FC, #C084FC, #F472B6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .welcome-subtitle {
-    font-size: 1.25rem;
-    color: var(--color-text-dark);
+    font-size: 1.15rem;
+    color: #94A3B8;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
 /* --- Feature Grid --- */
-
 .feature-grid {
     display: grid;
-    gap: 30px;
-    /* Two large columns on desktop, one column on mobile is implied by no media query */
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
 }
 
 /* --- Card Styles --- */
-
 .feature-card-link {
     text-decoration: none;
     color: inherit;
@@ -56,58 +56,84 @@
 }
 
 .feature-card {
-    background: var(--color-background-card);
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 6px 15px var(--color-shadow-purple);
-    border: 3px solid transparent;
-    transition: all 0.3s ease;
+    background: rgba(18, 20, 44, 0.72) !important;
+    border: 1px solid rgba(168, 85, 247, 0.25) !important;
+    backdrop-filter: blur(20px);
+    border-radius: 20px !important;
+    padding: 32px;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #7C3AED, #38BDF8);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
 }
 
 .feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px var(--color-shadow-purple);
-    border-color: var(--color-secondary); /* Highlight border on hover */
+    border-color: rgba(168, 85, 247, 0.6) !important;
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.35), 0 20px 45px rgba(0, 0, 0, 0.7) !important;
+    transform: translateY(-4px);
 }
 
-/* Specific Card Color Coding */
-
-.card-learn { border-bottom: 8px solid var(--color-secondary); } /* Blue/Teal for Learning */
-.card-chat { border-bottom: 8px solid var(--color-primary); }    /* Purple for Companion */
-.card-support { border-bottom: 8px solid #84cc16; }             /* Green for Support */
-
-
-.card-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
+.feature-icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
 }
 
 .card-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin: 0 0 10px 0;
-    color: var(--color-text-dark);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
 }
 
 .card-description {
-    font-size: 1rem;
-    color: var(--color-text-dimmed);
-    margin-bottom: 20px;
-    flex-grow: 1; /* Ensures card height uniformity */
+    color: #94A3B8;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin: 0 0 20px 0;
 }
 
-.card-action {
-    font-weight: 700;
-    color: var(--color-primary);
-    transition: color 0.2s;
-    display: flex;
+.card-action-btn {
+    display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding-top: 10px;
-    border-top: 1px dashed var(--color-primary-light);
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 9999px;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.card-learn .card-action { color: var(--color-secondary); border-top-color: var(--color-secondary); }
+.card-action-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
