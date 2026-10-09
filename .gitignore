@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+venv/
+.env
+*.env
+
+# SQLite database (not persistent on Render; use managed DB in production)
+*.db
+*.sqlite3
+
+# Node
+node_modules/
+.next/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Build artifacts
+dist/
+build/
+out/
