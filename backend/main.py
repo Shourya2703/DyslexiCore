@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from typing import List, Optional
 
 import jwt
-from passlib.context import CryptContext
+import bcrypt
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
@@ -53,7 +53,11 @@ class DBQuestProgress(Base):
 Base.metadata.create_all(bind=engine)
 
 # --- SECURITY CONFIG ---
-PWD_CONTEXT = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
+def hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+
+def verify_password(plain: str, hashed: str) -> bool:
+    return bcrypt.checkpw(plain.encode(), hashed.encode())
 JWT_SECRET = os.getenv("JWT_SECRET", "HACKATHON_DEMO_KEY_2025")
 ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
@@ -125,7 +129,7 @@ class ChatRequest(BaseModel):
 def register(req: RegisterRequest, db: Session = Depends(get_db)):
     if db.query(DBUser).filter(DBUser.email == req.email).first():
         raise HTTPException(status_code=400, detail="User already exists")
-    new_user = DBUser(email=req.email, hashed_password=PWD_CONTEXT.hash(req.password), first_name=req.first_name, age=req.age)
+    new_user = DBUser(email=req.email, hashed_password=hash_password(req.password), first_name=req.first_name, age=req.age)
     db.add(new_user)
     db.commit()
     return {"message": "User created successfully"}
@@ -133,7 +137,7 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
 @app.post("/auth/token")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(DBUser).filter(DBUser.email == form_data.username).first()
-    if not user or not PWD_CONTEXT.verify(form_data.password, user.hashed_password):
+    if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = jwt.encode({"sub": user.email, "exp": datetime.utcnow() + timedelta(hours=24)}, JWT_SECRET, algorithm=ALGORITHM)
     return {"access_token": token, "token_type": "bearer"}
