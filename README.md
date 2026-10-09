@@ -75,6 +75,6 @@ Accessible UI: Designing high-contrast, low-anxiety interfaces specifically for 
 
 ---
 
-© 2025 DyslexiCore | Built for the Hackathon
+© DyslexiCore 
 
 
