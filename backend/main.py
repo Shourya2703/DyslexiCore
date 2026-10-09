@@ -158,7 +158,17 @@ def submit_test(sub: GenericSubmission, db: Session = Depends(get_db), current_u
 
 @app.get("/api/assessment/history")
 def get_history(db: Session = Depends(get_db), current_user: DBUser = Depends(get_current_user)):
-    return db.query(DBScore).filter(DBScore.user_id == current_user.id).all()
+    scores = db.query(DBScore).filter(DBScore.user_id == current_user.id).all()
+    return [
+        {
+            "id": s.id,
+            "test_type": s.test_type,
+            "accuracy_percent": s.accuracy_percent,
+            "risk_level": s.risk_level,
+            "created_at": str(s.created_at),
+        }
+        for s in scores
+    ]
 
 # --- 3. LEARN & SKILL-QUEST ROUTES ---
 @app.get("/api/quests")

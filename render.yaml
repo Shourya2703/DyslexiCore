@@ -3,12 +3,10 @@ services:
     name: dyslexicore-api
     runtime: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install -r requirements.txt && chmod +x start.sh
+    startCommand: bash start.sh
     envVars:
       - key: JWT_SECRET
         generateValue: true
       - key: ALLOWED_ORIGINS
         value: "https://frontend-five-fawn-rtv1cmz6k6.vercel.app"
-      - key: PYTHON_VERSION
-        value: "3.11.9"
